@@ -132,6 +132,9 @@ gives the author some advice about what is needed.
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/git-credentials.html">Managing Git(Hub) Credentials</a>
+    </li>
+    <li>
       <a href="../articles/articles/pr-functions.html">Pull request helpers</a>
     </li>
   </ul>
@@ -208,9 +211,9 @@ gives the author some advice about what is needed.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>issue_close_community</span>(<span class='kw'>number</span>, reprex = <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>issue_close_community</span><span class='op'>(</span><span class='va'>number</span>, reprex <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>issue_reprex_needed</span>(<span class='kw'>number</span>)</pre>
+<span class='fu'>issue_reprex_needed</span><span class='op'>(</span><span class='va'>number</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -239,11 +242,11 @@ gives the author some advice about what is needed.</p></li>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>issue_close_community</span>(<span class='fl'>12</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>issue_close_community</span><span class='op'>(</span><span class='fl'>12</span><span class='op'>)</span>
 
-<span class='fu'>issue_reprex_needed</span>(<span class='fl'>241</span>, reprex = <span class='fl'>TRUE</span>)
-}
+<span class='fu'>issue_reprex_needed</span><span class='op'>(</span><span class='fl'>241</span>, reprex <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

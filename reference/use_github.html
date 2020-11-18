@@ -56,17 +56,16 @@
 <meta property="og:description" content="use_github() takes a local project and:
 Checks that the initial state is good to go:
 Project is already a Git repo
-Current branch is master
+Current branch is the default branch, e.g. master or main
 No uncommitted changes
 No pre-existing origin remote
 
 Creates an associated repo on GitHub
 Adds that GitHub repo to your local repo as the origin remote
-Offers to commit changes, e.g. the addition of GitHub links to the
-URL and BugReports fields of DESCRIPTION
 Makes an initial push to GitHub
-Configures origin/master to be the upstream branch of the local master
-branch
+Calls use_github_links(), if the project is an R package
+Configures origin/DEFAULT to be the upstream branch of the local
+DEFAULT branch, e.g. master or main
 
 
 See the Authentication section below for general setup that is necessary for
@@ -139,6 +138,9 @@ all of this to work." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/git-credentials.html">Managing Git(Hub) Credentials</a>
+    </li>
+    <li>
       <a href="../articles/articles/pr-functions.html">Pull request helpers</a>
     </li>
   </ul>
@@ -205,31 +207,30 @@ all of this to work." />
     <p><code>use_github()</code> takes a local project and:</p><ul>
 <li><p>Checks that the initial state is good to go:</p><ul>
 <li><p>Project is already a Git repo</p></li>
-<li><p>Current branch is <code>master</code></p></li>
+<li><p>Current branch is the default branch, e.g. <code>master</code> or <code>main</code></p></li>
 <li><p>No uncommitted changes</p></li>
 <li><p>No pre-existing <code>origin</code> remote</p></li>
 </ul></li>
 <li><p>Creates an associated repo on GitHub</p></li>
 <li><p>Adds that GitHub repo to your local repo as the <code>origin</code> remote</p></li>
-<li><p>Offers to commit changes, e.g. the addition of GitHub links to the
-URL and BugReports fields of DESCRIPTION</p></li>
 <li><p>Makes an initial push to GitHub</p></li>
-<li><p>Configures <code>origin/master</code> to be the upstream branch of the local <code>master</code>
-branch</p></li>
+<li><p>Calls <code><a href='use_github_links.html'>use_github_links()</a></code>, if the project is an R package</p></li>
+<li><p>Configures <code>origin/DEFAULT</code> to be the upstream branch of the local
+<code>DEFAULT</code> branch, e.g. <code>master</code> or <code>main</code></p></li>
 </ul>
 
 <p>See the Authentication section below for general setup that is necessary for
 all of this to work.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>use_github</span>(
-  organisation = <span class='kw'>NULL</span>,
-  private = <span class='fl'>FALSE</span>,
-  protocol = <span class='fu'><a href='git_protocol.html'>git_protocol</a></span>(),
-  auth_token = <span class='fu'><a href='create_github_token.html'>github_token</a></span>(),
-  host = <span class='kw'>NULL</span>,
-  credentials = <span class='fu'><a href='https://rdrr.io/r/base/Deprecated.html'>deprecated</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>use_github</span><span class='op'>(</span>
+  organisation <span class='op'>=</span> <span class='cn'>NULL</span>,
+  private <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  protocol <span class='op'>=</span> <span class='fu'><a href='git_protocol.html'>git_protocol</a></span><span class='op'>(</span><span class='op'>)</span>,
+  host <span class='op'>=</span> <span class='cn'>NULL</span>,
+  auth_token <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Deprecated.html'>deprecated</a></span><span class='op'>(</span><span class='op'>)</span>,
+  credentials <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Deprecated.html'>deprecated</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,8 +238,10 @@ all of this to work.</p>
     <tr>
       <th>organisation</th>
       <td><p>If supplied, the repo will be created under this
-organisation, instead of the account of the user associated with the
-<code>auth_token</code>. You must have permission to create repositories.</p></td>
+organisation, instead of the login associated with the GitHub token
+discovered for this <code>host</code>. The user's role and the token's scopes must be
+such that you have permission to create repositories in this
+<code>organisation</code>.</p></td>
     </tr>
     <tr>
       <th>private</th>
@@ -246,27 +249,26 @@ organisation, instead of the account of the user associated with the
     </tr>
     <tr>
       <th>protocol</th>
-      <td><p>Optional. Should be "https" or "ssh", if specified. Defaults
-to the option <code>usethis.protocol</code> and, if unset, to an interactive choice
-or, in non-interactive sessions, <code>"https"</code>. <code>NA</code> triggers the interactive
-menu.</p></td>
-    </tr>
-    <tr>
-      <th>auth_token</th>
-      <td><p>GitHub personal access token (PAT).</p></td>
+      <td><p>One of "https" or "ssh"</p></td>
     </tr>
     <tr>
       <th>host</th>
-      <td><p>GitHub API host to use. Override with the endpoint-root for your
-GitHub enterprise instance, for example,
-"https://github.hostname.com/api/v3".</p></td>
+      <td><p>GitHub host to target, passed to the <code>.api_url</code> argument of
+<code><a href='https://gh.r-lib.org/reference/gh.html'>gh::gh()</a></code>. If unspecified, gh defaults to "https://api.github.com",
+although gh's default can be customised by setting the GITHUB_API_URL
+environment variable.</p>
+<p>For a hypothetical GitHub Enterprise instance, either
+"https://github.acme.com/api/v3" or "https://github.acme.com" is
+acceptable.</p></td>
     </tr>
     <tr>
-      <th>credentials</th>
+      <th>auth_token, credentials</th>
       <td><p><img src='figures/lifecycle-defunct.svg' alt='Defunct lifecycle' />
-: No longer consulted now that usethis
-uses the gert package for Git operations, instead of git2r. Note that gert
-relies on the credentials package for auth.</p></td>
+: No longer consulted now
+that usethis uses the gert package for Git operations, instead of git2r;
+gert relies on the credentials package for auth. The API requests are now
+authorized with the token associated with the <code>host</code>, as retrieved by
+<code><a href='https://gh.r-lib.org/reference/gh_token.html'>gh::gh_token()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -282,31 +284,22 @@ relies on the credentials package for auth.</p></td>
 <p>Therefore two types of auth happen.</p>
 <p>To create a new repo on GitHub, we <strong>must</strong> call the GitHub REST API, i.e.
 this isn't one of the standard remote Git operations. Therefore you must make
-a <a href='https://github.com/settings/tokens'>GitHub personal access token (PAT)</a>
-available. There are two ways to do this, in order of preference:</p><ul>
-<li><p>Configure your token as the <code>GITHUB_PAT</code> env var. Then it can be used by
-many packages and functions, without any effort on your part. If you don't
-have a token yet or you haven't configured it as an env var, see
-<code><a href='create_github_token.html'>create_github_token()</a></code>.</p></li>
-<li><p>Provide the token directly via the <code>auth_token</code> argument.</p></li>
-</ul>
-
+a GitHub personal access token (PAT) available. See <code><a href='github-token.html'>gh_token_help()</a></code> for
+advice on getting and storing your token.</p>
 <p>When we clone or pull from GitHub or push to it, depending on the protocol
 (HTTPS vs. SSH) and the privacy of the repo, we may also need regular Git
 credentials, just like we'd need with command line Git.</p>
 <p>We highly recommend using the HTTPS protocol, unless you have a specific
 preference for SSH. If you are an "HTTPS person", your GitHub PAT (see above)
-can also be used to authorize standard Git remote operations. Once you've
-configured your PAT, your setup is complete! See <code><a href='git_protocol.html'>use_git_protocol()</a></code> for how
-to tell usethis about your preference for HTTPS (or SSH) by setting an
-option.</p>
-<p>But what about SSH? usethis uses the gert package for Git operations
-and gert, in turn, relies on the credentials package for auth:</p><ul>
+can also be used to authorize standard Git remote operations. Therefore, once
+you've configured your PAT, your setup is complete!</p>
+<p>But what if you prefer the SSH protocol? usethis uses the gert package for
+Git operations and gert, in turn, relies on the credentials package for auth:</p><ul>
 <li><p><a href='https://docs.ropensci.org/gert'>https://docs.ropensci.org/gert</a></p></li>
 <li><p><a href='https://docs.ropensci.org/credentials/'>https://docs.ropensci.org/credentials/</a></p></li>
 </ul>
 
-<p>In usethis v1.7.0, we switched from git2r to gert + credentials. The main
+<p>In usethis v2.0.0, we switched from git2r to gert + credentials. The main
 motivation is to provide a smoother user experience by discovering and using
 the same credentials as command line Git (and, therefore, the same as
 RStudio). The credentials package <em>should</em> automatically discover your SSH
@@ -317,16 +310,16 @@ troubleshooting on getting the credentials package to find your SSH keys. Its
 is a good place to start.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>pkgpath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"testpkg"</span>)
-<span class='fu'><a href='create_package.html'>create_package</a></span>(<span class='kw'>pkgpath</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>pkgpath</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"testpkg"</span><span class='op'>)</span>
+<span class='fu'><a href='create_package.html'>create_package</a></span><span class='op'>(</span><span class='va'>pkgpath</span><span class='op'>)</span>
 
 <span class='co'>## now, working inside "testpkg", initialize git repository</span>
-<span class='fu'><a href='use_git.html'>use_git</a></span>()
+<span class='fu'><a href='use_git.html'>use_git</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'>## create github repository and configure as git remote</span>
-<span class='fu'>use_github</span>()
-}
+<span class='fu'>use_github</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

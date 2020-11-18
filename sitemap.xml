@@ -16,9 +16,6 @@
     <loc>https://usethis.r-lib.org/reference/create_from_github.html</loc>
   </url>
   <url>
-    <loc>https://usethis.r-lib.org/reference/create_github_token.html</loc>
-  </url>
-  <url>
     <loc>https://usethis.r-lib.org/reference/create_package.html</loc>
   </url>
   <url>
@@ -26,6 +23,9 @@
   </url>
   <url>
     <loc>https://usethis.r-lib.org/reference/edit_file.html</loc>
+  </url>
+  <url>
+    <loc>https://usethis.r-lib.org/reference/git_branch_default.html</loc>
   </url>
   <url>
     <loc>https://usethis.r-lib.org/reference/git_credentials.html</loc>
@@ -38,6 +38,9 @@
   </url>
   <url>
     <loc>https://usethis.r-lib.org/reference/git_vaccinate.html</loc>
+  </url>
+  <url>
+    <loc>https://usethis.r-lib.org/reference/github-token.html</loc>
   </url>
   <url>
     <loc>https://usethis.r-lib.org/reference/github_actions.html</loc>
@@ -142,6 +145,9 @@
     <loc>https://usethis.r-lib.org/reference/use_github_links.html</loc>
   </url>
   <url>
+    <loc>https://usethis.r-lib.org/reference/use_github_pages.html</loc>
+  </url>
+  <url>
     <loc>https://usethis.r-lib.org/reference/use_github_release.html</loc>
   </url>
   <url>
@@ -236,6 +242,9 @@
   </url>
   <url>
     <loc>https://usethis.r-lib.org/reference/zip-utils.html</loc>
+  </url>
+  <url>
+    <loc>https://usethis.r-lib.org/articles/articles/git-credentials.html</loc>
   </url>
   <url>
     <loc>https://usethis.r-lib.org/articles/articles/pr-functions.html</loc>

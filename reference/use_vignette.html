@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a vignette or article. — use_vignette • usethis</title>
+<title>Create a vignette or article — use_vignette • usethis</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:title" content="Create a vignette or article. — use_vignette" />
+<meta property="og:title" content="Create a vignette or article — use_vignette" />
 <meta property="og:description" content="Creates a new vignette or article in vignettes/. Articles are a special
 type of vignette that appear on pkgdown websites, but are not included
 in the package itself (because they are added to .Rbuildignore
@@ -125,6 +125,9 @@ automatically)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/git-credentials.html">Managing Git(Hub) Credentials</a>
+    </li>
+    <li>
       <a href="../articles/articles/pr-functions.html">Pull request helpers</a>
     </li>
   </ul>
@@ -182,7 +185,7 @@ automatically)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a vignette or article.</h1>
+    <h1>Create a vignette or article</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/usethis/blob/master/R/vignette.R'><code>R/vignette.R</code></a></small>
     <div class="hidden name"><code>use_vignette.Rd</code></div>
     </div>
@@ -194,9 +197,9 @@ in the package itself (because they are added to <code>.Rbuildignore</code>
 automatically).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>use_vignette</span>(<span class='kw'>name</span>, title = <span class='kw'>name</span>)
+    <pre class="usage"><span class='fu'>use_vignette</span><span class='op'>(</span><span class='va'>name</span>, title <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span>
 
-<span class='fu'>use_article</span>(<span class='kw'>name</span>, title = <span class='kw'>name</span>)</pre>
+<span class='fu'>use_article</span><span class='op'>(</span><span class='va'>name</span>, title <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,9 +232,9 @@ you never accidentally track rendered vignettes.</p></li>
 <a href='https://r-pkgs.org'>R Packages</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>use_vignette</span>(<span class='st'>"how-to-do-stuff"</span>, <span class='st'>"How to do stuff"</span>)
-}
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>use_vignette</span><span class='op'>(</span><span class='st'>"how-to-do-stuff"</span>, <span class='st'>"How to do stuff"</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

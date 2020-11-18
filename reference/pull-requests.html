@@ -55,8 +55,7 @@
 <meta property="og:title" content="Helpers for GitHub pull requests — pull-requests" />
 <meta property="og:description" content="The pr_* family of functions is designed to make working with GitHub pull
 requests (PRs) as painless as possible for both contributors and package
-maintainers. They are designed to support the Git and GitHub best practices
-described in Happy Git and GitHub for the useR.
+maintainers.
 To use the pr_* functions, your project must be a Git repo and have one of
 these GitHub remote configurations:
 &quot;ours&quot;: You can push to the GitHub remote configured as origin and it's
@@ -68,7 +67,10 @@ personal copy and upstream points to the source repo.
 
 &quot;Ours&quot; and &quot;fork&quot; are two of several GitHub remote configurations examined in
 Common remote setups
-in Happy Git.
+in Happy Git and GitHub for the useR.
+The Pull Request Helpers
+article walks through the process of making a pull request with the pr_*
+functions.
 The pr_* functions also use your Git/GitHub credentials to carry out
 various remote operations. See below for more." />
 <meta property="og:image" content="https://usethis.r-lib.org/logo.png" />
@@ -139,6 +141,9 @@ various remote operations. See below for more." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/git-credentials.html">Managing Git(Hub) Credentials</a>
+    </li>
+    <li>
       <a href="../articles/articles/pr-functions.html">Pull request helpers</a>
     </li>
   </ul>
@@ -204,8 +209,7 @@ various remote operations. See below for more." />
     <div class="ref-description">
     <p>The <code>pr_*</code> family of functions is designed to make working with GitHub pull
 requests (PRs) as painless as possible for both contributors and package
-maintainers. They are designed to support the Git and GitHub best practices
-described in <a href='https://happygitwithr.com'>Happy Git and GitHub for the useR</a>.</p>
+maintainers.</p>
 <p>To use the <code>pr_*</code> functions, your project must be a Git repo and have one of
 these GitHub remote configurations:</p><ul>
 <li><p>"ours": You can push to the GitHub remote configured as <code>origin</code> and it's
@@ -217,42 +221,51 @@ fork, and its parent is configured as <code>upstream</code>. <code>origin</code>
 
 <p>"Ours" and "fork" are two of several GitHub remote configurations examined in
 <a href='https://happygitwithr.com/common-remote-setups.html'>Common remote setups</a>
-in Happy Git.</p>
+in Happy Git and GitHub for the useR.</p>
+<p>The <a href='https://usethis.r-lib.org/articles/articles/pr-functions.html'>Pull Request Helpers</a>
+article walks through the process of making a pull request with the <code>pr_*</code>
+functions.</p>
 <p>The <code>pr_*</code> functions also use your Git/GitHub credentials to carry out
 various remote operations. See below for more.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pr_init</span>(<span class='kw'>branch</span>)
+    <pre class="usage"><span class='fu'>pr_init</span><span class='op'>(</span><span class='va'>branch</span><span class='op'>)</span>
 
-<span class='fu'>pr_resume</span>(branch = <span class='kw'>NULL</span>)
+<span class='fu'>pr_resume</span><span class='op'>(</span>branch <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>pr_fetch</span>(<span class='kw'>number</span>)
+<span class='fu'>pr_fetch</span><span class='op'>(</span>number <span class='op'>=</span> <span class='cn'>NULL</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"primary"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>pr_push</span>()
+<span class='fu'>pr_push</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>pr_pull</span>()
+<span class='fu'>pr_pull</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>pr_merge_main</span>()
+<span class='fu'>pr_merge_main</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>pr_sync</span>()
+<span class='fu'>pr_view</span><span class='op'>(</span>number <span class='op'>=</span> <span class='cn'>NULL</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"primary"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>pr_view</span>()
+<span class='fu'>pr_pause</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>pr_pause</span>()
-
-<span class='fu'>pr_finish</span>(number = <span class='kw'>NULL</span>)</pre>
+<span class='fu'>pr_finish</span><span class='op'>(</span>number <span class='op'>=</span> <span class='cn'>NULL</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"source"</span>, <span class='st'>"primary"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>branch</th>
-      <td><p>branch name. Should usually consist of lower case letters,
-numbers, and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>.</p></td>
+      <td><p>Name of a new or existing local branch. If creating a new
+branch, note this should usually consist of lower case letters, numbers,
+and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>.</p></td>
     </tr>
     <tr>
       <th>number</th>
-      <td><p>Number of PR to fetch.</p></td>
+      <td><p>Number of PR.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>Which repo to target? This is only a question in the case of a
+fork. In a fork, there is some slim chance that you want to consider pull
+requests against your fork (the primary repo, i.e. <code>origin</code>) instead of
+those against the source repo (i.e. <code>upstream</code>, which is the default).</p></td>
     </tr>
     </table>
 
@@ -263,36 +276,34 @@ numbers, and <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>
 <p>The <code>pr_*</code> functions interact with GitHub both as a conventional Git remote
 and via the REST API. Therefore, your credentials must be discoverable. Which
 credentials do we mean?</p><ul>
-<li><p>A GitHub personal access token (PAT) must be configured as the <code>GITHUB_PAT</code>
-environment variable. <code><a href='create_github_token.html'>create_github_token()</a></code> helps you do this. This PAT
-allows usethis to call the GitHub API on your behalf. If you use HTTPS
-remotes, the PAT is also used for Git operations, such as <code>git push</code>. That
-means the PAT is the only credential you need! This is why HTTPS + PAT is
-highly recommended for anyone new to Git and GitHub and PRs.</p></li>
+<li><p>A GitHub personal access token (PAT) must be discoverable by the gh
+package, which is used for GitHub operations via the REST API. See
+<code><a href='github-token.html'>gh_token_help()</a></code> for more about getting and configuring a PAT.</p></li>
+<li><p>If you use the HTTPS protocol for Git remotes, your PAT is also used for
+Git operations, such as <code>git push</code>. Usethis uses the gert package for this,
+so the PAT must be discoverable by gert. Generally gert and gh will
+discover and use the same PAT. This ability to "kill two birds with one
+stone" is why HTTPS + PAT is our recommended auth strategy for those new
+to Git and GitHub and PRs.</p></li>
 <li><p>If you use SSH remotes, your SSH keys must also be discoverable, in
 addition to your PAT. The public key must be added to your GitHub account.</p></li>
 </ul>
 
-<p>Usethis uses the gert package for Git operations
-(<a href='https://docs.ropensci.org/gert'>https://docs.ropensci.org/gert</a>) and gert, in turn, relies on the
-credentials package (<a href='https://docs.ropensci.org/credentials/'>https://docs.ropensci.org/credentials/</a>) for auth. If
-you have credential problems, focus your troubleshooting on getting the
-credentials package to find your credentials. Its introductory vignette is an
-excellent place to learn more:
-<a href='https://cran.r-project.org/web/packages/credentials/vignettes/intro.html'>https://cran.r-project.org/web/packages/credentials/vignettes/intro.html</a>.</p>
-<p>If the <code>pr_*</code> functions need to configure a new remote, its transport
-protocol (HTTPS vs SSH) is determined by the protocol used for <code>origin</code>.</p>
+<p>Git/GitHub credential management is covered in a dedicated article:
+<a href='https://usethis.r-lib.org/articles/articles/git-credentials.html'>Managing Git(Hub) Credentials</a></p>
     <h2 class="hasAnchor" id="for-contributors"><a class="anchor" href="#for-contributors"></a>For contributors</h2>
 
     
 
-<p>To contribute to a package, first use <code><a href='create_from_github.html'>create_from_github("OWNER/REPO", fork = TRUE)</a></code> to fork the source repository, and then check out a local copy.</p>
+<p>To contribute to a package, first use <code><a href='create_from_github.html'>create_from_github("OWNER/REPO")</a></code> to
+fork the source repository, and then check out a local copy.</p>
 <p>Next use <code>pr_init()</code> to create a branch for your PR. It is best practice to
-never make commits to the <code>master</code> (or default) branch of a fork, because you
-do not own it. A pull request should always come from a feature branch. It
-will be much easier to pull upstream changes from the fork parent if you only
-allow yourself to work in feature branches. It is also much easier for a
-maintainer to explore and extend your PR if you create a feature branch.</p>
+never make commits to the default branch branch of a fork (usually named
+<code>main</code> or <code>master</code>), because you do not own it. A pull request should always
+come from a feature branch. It will be much easier to pull upstream changes
+from the fork parent if you only allow yourself to work in feature branches.
+It is also much easier for a maintainer to explore and extend your PR if you
+create a feature branch.</p>
 <p>Work locally, in your branch, making changes to files, and committing your
 work. Once you're ready to create the PR, run <code>pr_push()</code> to push your local
 branch to GitHub, and open a webpage that lets you initiate the PR (or draft
@@ -306,16 +317,18 @@ then run <code>pr_push()</code> to update your PR.</p>
 <p>It's also possible that the maintainer will contribute some code to your PR:
 to get those changes back onto your computer, run <code>pr_pull()</code>. It can also
 happen that other changes have occurred in the package since you first
-created your PR. You might need to merge the <code>master</code> (or default) branch
-into your PR branch. Do that by running <code>pr_merge_main()</code>: this makes sure
-that your PR is compatible with the primary repo's main line of development.
-Both <code>pr_pull()</code> and <code>pr_merge_main()</code> can result in merge conflicts, so
-be prepared to resolve before continuing.</p>
+created your PR. You might need to merge the default branch (usually named
+<code>main</code> or <code>master</code>) into your PR branch. Do that by running
+<code>pr_merge_main()</code>: this makes sure that your PR is compatible with the
+primary repo's main line of development. Both <code>pr_pull()</code> and
+<code>pr_merge_main()</code> can result in merge conflicts, so be prepared to resolve
+before continuing.</p>
     <h2 class="hasAnchor" id="for-maintainers"><a class="anchor" href="#for-maintainers"></a>For maintainers</h2>
 
     
 
 <p>To download a PR locally so that you can experiment with it, run
+<code>pr_fetch()</code> and select the PR or, if you already know its number, call
 <code>pr_fetch(&lt;pr_number&gt;)</code>. If you make changes, run <code>pr_push()</code> to push them
 back to GitHub. After you have merged the PR, run <code>pr_finish()</code> to delete the
 local branch and remove the remote associated with the contributor's fork.</p>
@@ -324,49 +337,55 @@ local branch and remove the remote associated with the contributor's fork.</p>
     
 
 <ul>
-<li><p><code>pr_init()</code>: Does a preparatory pull from the primary repo, to get a good
-start point. Creates and checks out a new branch. Nothing is pushed to
-or created on GitHub. That only happens upon the first <code>pr_push()</code>.</p></li>
-<li><p><code>pr_resume()</code>: Resume work on a PR by switching to its existing branch and
-pulling any updates from GitHub.</p></li>
-<li><p><code>pr_fetch()</code>: Checks out a PR on the primary repo for local exploration.
-This can cause a new remote to be configured and a new local branch to be
-created. The local branch is configured to track its remote counterpart.
-<code>pr_fetch()</code> puts a maintainer in a position where they can push changes
-into an external PR via <code>pr_push()</code>.</p></li>
-<li><p><code>pr_push()</code>: The first time it's called, a PR branch is pushed to <code>origin</code>
+<li><p><code>pr_init()</code>: Does a preparatory pull of the default branch from the source
+repo, to get a good start point. Creates and checks out a new branch. Nothing
+is pushed to or created on GitHub (that does not happen until the first time
+you call <code>pr_push()</code>).</p></li>
+<li><p><code>pr_resume()</code>: Resume work on a PR by switching to an existing local branch
+and pulling any changes from its upstream tracking branch, if it has one. If
+called with no arguments, up to 9 local branches are offered for interactive
+selection, with a preference for branches connected to PRs and for branches
+with recent activity.</p></li>
+<li><p><code>pr_fetch()</code>: Checks out a PR on the source repo for local exploration. If
+called with no arguments, up to 9 open PRs are offered for interactive
+selection. This can cause a new remote to be configured and a new local
+branch to be created. The local branch is configured to track its remote
+counterpart. The transport protocol (HTTPS vs SSH) for any new remote is
+inherited from the remote representing the source repo. <code>pr_fetch()</code> puts a
+maintainer in a position where they can push changes into an internal or
+external PR via <code>pr_push()</code>.</p></li>
+<li><p><code>pr_push()</code>: The first time it's called, a PR branch is pushed to GitHub
 and you're taken to a webpage where a new PR (or draft PR) can be created.
 This also sets up the local branch to track its remote counterpart.
-Subsequent calls to <code>pr_push()</code> make sure the local branch has all the
-remote changes and, if so, pushes local changes, thereby updating the PR.</p></li>
+Subsequent calls to <code>pr_push()</code> make sure the local branch has all the remote
+changes and, if so, pushes local changes, thereby updating the PR.</p></li>
 <li><p><code>pr_pull()</code>: Pulls changes from the local branch's remote tracking branch.
 If a maintainer has extended your PR, this is how you bring those changes
 back into your local work.</p></li>
-<li><p><code>pr_merge_main()</code>: Pulls changes from the <code>master</code> branch of the primary
-repo into the current local branch. This can be used when the local branch
-is <code>master</code> or when it's a PR branch.</p></li>
-<li><p><code>pr_sync()</code> = <code>pr_pull() + pr_merge_main() + pr_push()</code>. In words, grab
-any remote changes in the PR and merge then into your local work. Then
-merge in any changes from <code>master</code> of the primary repo. Finally, push the
-result of all this back into the PR.</p></li>
+<li><p><code>pr_merge_main()</code>: Pulls changes from the default branch of the source repo
+into the current local branch. This can be used when the local branch is the
+default branch or when it's a PR branch.</p></li>
 <li><p><code>pr_pause()</code>: Makes sure you're up-to-date with any remote changes in the
-PR. Then switches back to <code>master</code> and pulls from the primary repo.</p></li>
-<li><p><code>pr_view()</code>: Visits the PR associated with a branch in the browser. usethis
-records this URL in git config of the local repo.</p></li>
+PR. Then switches back to the default branch (usually named <code>main</code> or
+<code>master</code>) and pulls from the source repo.</p></li>
+<li><p><code>pr_view()</code>: Visits the PR associated with the current branch in the
+browser (default) or the specific PR identified by <code>number</code>.
+(FYI <code><a href='browse-this.html'>browse_github_pulls()</a></code> is a handy way to visit the list of all PRs for
+the current project.)</p></li>
 <li><p><code>pr_finish()</code>: If <code>number</code> is given, first does <code>pr_fetch(number)</code>. It's
 assumed the current branch is the PR branch of interest. First, makes sure
-there are no unpushed local changes. Switches back to <code>master</code> and pulls
-changes from the primary repo. If the PR has been merged and user has
-permission, deletes the remote branch. Deletes the PR branch. If the PR
-came from an external fork, the corresponding remote is deleted, provided
-it's not in use by any other local branches.</p></li>
+there are no unpushed local changes. Switches back to the default branch and
+pulls changes from the source repo. If the PR has been merged and user has
+permission, deletes the remote branch. Deletes the PR branch. If the PR came
+from an external fork, the corresponding remote is deleted, provided it's not
+in use by any other local branches.</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>pr_fetch</span>(<span class='fl'>123</span>)
-}
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>pr_fetch</span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
